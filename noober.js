@@ -12,6 +12,92 @@ function levelOfService(ride) {
   return levelOfService
 }
 
+let purpleRides = []
+let xlRides = []
+let allRides= []
+let xRides = []
+let poolRides =[]
+let ridesToShow = []
+getRidesData()
+
+
+//Collect all buttons with the same class
+let buttons = document.querySelectorAll('.filter-button') 
+  if (document.body.addEventListener){
+    document.body.addEventListener('click',clickHandler,false);
+}
+else{
+    document.body.attachEvent('onclick',clickHandler); //for IE
+}
+
+//Handler after a click
+function clickHandler(click){
+    click = click || window.event;
+    let target = click.target || click.srcElement;
+    if (target.className.match('filter-button'))
+    {
+      let htmlContent = document.querySelector('.rides')
+      htmlContent.innerHTML = ""  
+      //console.log("a button was clicked")
+      console.log(target)
+      let id = target.id
+      highlight(target)
+      //console.log(target.id)  
+      if(id == "all-filter") {
+        renderRides(ridesToShow[0])
+      }
+      else if(id == "noober-pool-filter") {
+        renderRides(ridesToShow[1])
+      }
+      else if(id == "noober-purple-filter") {
+        renderRides(ridesToShow[2])
+      }
+      else if(id == "noober-xl-filter") {
+        renderRides(ridesToShow[3])
+      }
+      else if(id == "noober-x-filter") {
+        renderRides(ridesToShow[4])
+      }
+    }
+}
+
+//Highlight a button clicked
+var buttonClicked = null
+function highlight(element) {
+    if(buttonClicked != null) {
+      buttonClicked.style.background = 'none'
+    }
+  buttonClicked = element 
+  buttonClicked.style.background = "rgba(0,0,255,0.2)" 
+}
+
+//get the data from API and level them up
+async function getRidesData() {
+  let response = await fetch('https://kiei451.com/api/rides.json')
+  let rideData = await response.json()
+  for(let i=0;i<rideData.length;i++) {
+    ride = rideData[i]
+    lvl = levelOfService(ride)
+    if(lvl == "Noober Purple") {
+      purpleRides.push(ride)
+    }
+    else if(lvl == "Noober Pool") {
+     poolRides.push(ride)
+    }
+    else if(lvl == "Noober XL") {
+      xlRides.push(ride)
+    }
+    else if(lvl == "Noober X") {
+      xRides.push(ride)
+    }
+  }
+  ridesToShow[0]=rideData
+  ridesToShow[1]=poolRides
+  ridesToShow[2]=purpleRides
+  ridesToShow[3]=xlRides
+  ridesToShow[4]=xRides
+}
+ 
 function renderRides(ridesArray) {
   for (let i = 0; i < ridesArray.length; i++) {
     let ride = ridesArray[i]
@@ -70,4 +156,3 @@ function renderRides(ridesArray) {
 window.addEventListener('DOMContentLoaded', function() {
   // YOUR CODE
 })
-
