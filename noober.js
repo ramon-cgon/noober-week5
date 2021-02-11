@@ -11,17 +11,18 @@ function levelOfService(ride) {
   }
   return levelOfService
 }
-
+//empty arrays per level of service
 let purpleRides = []
 let xlRides = []
 let allRides= []
 let xRides = []
 let poolRides =[]
+// colected rides data per level of service
 let ridesToShow = []
 getRidesData()
 
 
-//Collect all buttons with the same class
+//Assign an event listener to all buttons with the same class
 let buttons = document.querySelectorAll('.filter-button') 
   if (document.body.addEventListener){
     document.body.addEventListener('click',clickHandler,false);
@@ -30,7 +31,7 @@ else{
     document.body.attachEvent('onclick',clickHandler); //for IE
 }
 
-//Handler after a click
+//function handler after a click in a buttom
 function clickHandler(click){
     click = click || window.event;
     let target = click.target || click.srcElement;
