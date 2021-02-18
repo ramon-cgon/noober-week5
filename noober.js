@@ -43,6 +43,7 @@ function clickHandler(click){
       console.log(target)
       let id = target.id
       highlight(target)
+      getRidesData()
       //console.log(target.id)  
       if(id == "all-filter") {
         renderRides(ridesToShow[0])
